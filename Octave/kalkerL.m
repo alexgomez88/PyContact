@@ -3,7 +3,7 @@ function [fx,fy]=kalkerL(Nload,a,b,mu,ro,G,v_x,v_y,v_z)
 	%Valores de C_11
 	C_11_0_1=[2.47,2.51,2.59,2.68,2.78,2.88,2.98,3.09,3.19,3.29];
 	C_11_0_2=[3.40,3.51,3.65,3.82,4.06,4.37,4.84,5.57,6.96,10.7];
-	C_11_0=[C_11_0_1,C_11_0_2]
+	C_11_0=[C_11_0_1,C_11_0_2];
 	C_11_1_1=[3.29,3.31,3.37,3.44,3.53,3.62,3.72,3.81,3.91,4.01];
 	C_11_1_2=[4.12,4.22,4.36,4.54,4.78,5.10,5.57,6.34,7.78,11.7];
 	C_11_1=[C_11_1_1,C_11_1_2];
@@ -36,8 +36,8 @@ function [fx,fy]=kalkerL(Nload,a,b,mu,ro,G,v_x,v_y,v_z)
 	%Se crea una fila valores para la relacion entre a/b denominada g (nomeclatura
 	%%propuesta por Iwinichi)
 	g1=0:0.1:1;
-	g2=(0.9:-0.1:0.1)^-1;
-	g=[g1,g2];
+	g2=(0.9:-0.1:0.1);
+	g=[g1,g2.^-1];
 
     	%Interpolacion g
     	C_11_a=interp1(g,C_11_0,a/b,'linear');
@@ -58,8 +58,8 @@ function [fx,fy]=kalkerL(Nload,a,b,mu,ro,G,v_x,v_y,v_z)
     	%Calcula las cargas longitudinales y laterales considerando la fuga como la
 	%deformacion en la superfie, por tanto el comportamiento del materal en el punto
 	%de contacto es lineal.
-	fx=-G*a*b*C_11*v_x;
-	fy=-G*a*b*C_22*v_y-G*a*b*sqrt(a*b)*C_23*v_z;
+	fx=G*a*b*C_11*v_x;
+	fy=G*a*b*C_22*v_y-G*a*b*sqrt(a*b)*C_23*v_z;
 	ft=ro*Nload;
 	if (abs(fx)>ft)
 		fx=(ft)*sign(fx);

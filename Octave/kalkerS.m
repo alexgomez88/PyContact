@@ -1,4 +1,4 @@
-function [fx,fy]=kalkerS(Nload,a,b,mu,ro,G,v_x,v_y,v_z)
+function [fx,fy]=kalkerS(Nload,a,b,vmu,ro,G,v_x,v_y,v_z)
     	%--Constantes de Kalker.
 	%Tabla de Valores de C_11
 	C_11_0_1=[2.47,2.51,2.59,2.68,2.78,2.88,2.98,3.09,3.19,3.29];
@@ -61,7 +61,7 @@ function [fx,fy]=kalkerS(Nload,a,b,mu,ro,G,v_x,v_y,v_z)
     	%Coeficientes elasticos de Kalker
 	L1=8*a/(3*G*c11);
 	L2=8*a/(3*G*c22);
-	L3=pi*(a**2)/(4*G*sqrt(a*b)*C_23);
+	L3=pi*(a**2)/(4*G*sqrt(a*b)*c23);
 	%Inicio de las iteraciones verticales
 	for j=1:100
 		fx=0;
@@ -79,7 +79,7 @@ function [fx,fy]=kalkerS(Nload,a,b,mu,ro,G,v_x,v_y,v_z)
             		%Llenado de la matriz de coordenadas de X
             		X(j,i)=Xo+DX*(i);
             		%Se determina la presion normal aplicada sobre el punto de estudio
-            		Pn(j,i)=((3*Nload)/(2*%pi*a*b))*real(sqrt(1-(X(j,i)/a)**2-(Y(j,i)/b)**2));
+            		Pn(j,i)=((3*Nload)/(2*pi*a*b))*real(sqrt(1-(X(j,i)/a)**2-(Y(j,i)/b)**2));
             		%Presion maxima tangencial permitida en la superficie
             		Tmax(j,i)=ro*Pn(j,i);
             		%Distribucion de presion tangencial lineal
