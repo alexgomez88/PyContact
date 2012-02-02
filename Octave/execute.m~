@@ -17,7 +17,7 @@ for i=1:length(X)
 end
 figure('Name','Comparacion de curvas')
 demo0=plot(X,Y1,X,Y2,X,Y3,X,Y4,X,Y5);
-set(demo0,'LineWidth',6);
+set(demo0,'LineWidth',4);
 title('Modelos de Contacto rueda-riel vs fuga')
 xlabel('Fuga')
 ylabel('Relación Carga vs Maxima Carga Tangencial')
@@ -53,17 +53,17 @@ for i=n
 end
 figure('Name','Comparacion de tiempo de ejecución')
 demo1=plot(n,T1,n,T2,n,T3,n,T4,n,T5);
-set(demo1,'LineWidth',6);
+set(demo1,'LineWidth',4);
 title('Tiempo de computo entre modelos de contacto rueda-riel')
 xlabel('Iteraciones')
-ylabel('Tiempo (s)')
+ylabel('Tiempo')
 legend ("carter","kalkerL","kalkerS","shen","polanch");
 saveas(demo1,'demo2.jpg');
 figure('Name','Comparacion de tiempo de ejecución')
 demo2=plot(n,T1,n,T2,n,T4,n,T5);
-set(demo2,'LineWidth',6);
+set(demo2,'LineWidth',4);
 title('Tiempo de computo entre modelos de contacto rueda-riel')
 xlabel('Iteraciones')
-ylabel('Tiempo (s)')
+ylabel('Tiempo')
 legend ("carter","kalkerL","shen","polanch");
 saveas(demo2,'demo3.jpg');

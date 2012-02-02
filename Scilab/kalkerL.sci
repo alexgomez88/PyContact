@@ -58,8 +58,8 @@ function [fx,fy]=kalkerL(Nload,a,b,mu,ro,G,v_x,v_y,v_z)
     //Calcula las cargas longitudinales y laterales considerando la fuga como la
 	//deformacion en la superfie, por tanto el comportamiento del materal en el punto
 	//de contacto es lineal.
-	fx=-G*a*b*C_11*v_x;
-	fy=-G*a*b*C_22*v_y-G*a*b*sqrt(a*b)*C_23*v_z;
+	fx=G*a*b*C_11*v_x;
+	fy=G*a*b*C_22*v_y-G*a*b*sqrt(a*b)*C_23*v_z;
 	ft=ro*Nload;
 	if (abs(fx)>ft)
 		fx=(ft)*sign(fx);

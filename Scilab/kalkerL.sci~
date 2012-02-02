@@ -1,8 +1,5 @@
-function [fx,fy]=shen(Nload,a,b,mu,ro,G,v_x,v_y,v_z)
-    //Calcula las cargas longitudinales y laterales considerando las cargas 
-	//obtenidas por el modelo de Kalker, suavizando la curva de obtenida por 
-    //el modelo lineal de Kalker.
-        //--Constantes de Kalker.
+function [fx,fy]=kalkerL(Nload,a,b,mu,ro,G,v_x,v_y,v_z)
+    //--Constantes de Kalker.
 	//Valores de C_11
 	C_11_0_1=[2.47,2.51,2.59,2.68,2.78,2.88,2.98,3.09,3.19,3.29];
 	C_11_0_2=[3.40,3.51,3.65,3.82,4.06,4.37,4.84,5.57,6.96,10.7];
@@ -61,22 +58,14 @@ function [fx,fy]=shen(Nload,a,b,mu,ro,G,v_x,v_y,v_z)
     //Calcula las cargas longitudinales y laterales considerando la fuga como la
 	//deformacion en la superfie, por tanto el comportamiento del materal en el punto
 	//de contacto es lineal.
-	fx=G*a*b*C_11*v_x;
-	fy=G*a*b*C_22*v_y-G*a*b*sqrt(a*b)*C_23*v_z;
-	
-	F_t=sqrt(fx**2+fy**2);
-    if (F_t==0)
-		fx=0;
-		fy=0;
-	else
-        if (F_t<3*(ro*Nload))
-            ft=(ro*Nload)*((F_t/(ro*Nload))-((F_t/(ro*Nload))**2)/3+((F_t/(ro*Nload))**3)/27);    
-        else
-            ft=(ro*Nload);
-        end
-        fx=ft*(fx/F_t);
-        fy=ft*(fy/F_t);
-    end		
+	fx=-G*a*b*C_11*v_x;
+	fy=-G*a*b*C_22*v_y-G*a*b*sqrt(a*b)*C_23*v_z;
+	ft=ro*Nload;
+	if (abs(fx)>ft)
+		fx=(ft)*sign(fx);
+    end
+	if (abs(fy)>ft)
+		fy=(ft)*sign(fy);
+    end
 
-	
 endfunction

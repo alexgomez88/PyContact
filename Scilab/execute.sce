@@ -1,3 +1,4 @@
+getd();
 X=0:0.01:1;
 Y1=X;
 Y2=X;
@@ -15,14 +16,14 @@ for i=1:length(X)
 	[FX,FY]=polanch(30000,0.0002,0.0001,0.25,0.55,300*10^9,X(i),0,0);
 	Y5(i)=FX/(30000*0.55);
 end
-figure('Name','Comparacion de curvas')
-demo0=plot(X,Y1,X,Y2,X,Y3,X,Y4,X,Y5);
-set(demo0,'LineWidth',6);
+figure(1)
+demo0=plot(X,[Y1' Y2' Y3' Y4' Y5'],'LineWidth',6);
+//set(demo0,'LineWidth',6);
 title('Modelos de Contacto rueda-riel vs fuga')
 xlabel('Fuga')
 ylabel('Relación Carga vs Maxima Carga Tangencial')
 legend ("carter","kalkerL","kalkerS","shen","polanch");
-saveas(demo0,'demo1.jpg');
+xs2jpg(1,'demo1.jpg');
 n=1:50;
 for i=n
 	tic();
@@ -51,19 +52,19 @@ for i=n
 	end
 	T5(i)=toc();
 end
-figure('Name','Comparacion de tiempo de ejecución')
-demo1=plot(n,T1,n,T2,n,T3,n,T4,n,T5);
-set(demo1,'LineWidth',6);
+figure(2)
+demo1=plot(n,[T1 T2 T3 T4 T5],'LineWidth',6);
+//set(demo1,'LineWidth',6);
 title('Tiempo de computo entre modelos de contacto rueda-riel')
 xlabel('Iteraciones')
 ylabel('Tiempo (s)')
 legend ("carter","kalkerL","kalkerS","shen","polanch");
-saveas(demo1,'demo2.jpg');
-figure('Name','Comparacion de tiempo de ejecución')
-demo2=plot(n,T1,n,T2,n,T4,n,T5);
-set(demo2,'LineWidth',6);
+xs2jpg(2,'demo2.jpg');
+figure(3)
+demo2=plot(n,[T1 T2 T4 T5],'LineWidth',6);
+//set(demo1,'LineWidth',6);
 title('Tiempo de computo entre modelos de contacto rueda-riel')
 xlabel('Iteraciones')
 ylabel('Tiempo (s)')
 legend ("carter","kalkerL","shen","polanch");
-saveas(demo2,'demo3.jpg');
+xs2jpg(3,'demo3.jpg');

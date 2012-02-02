@@ -61,14 +61,27 @@ function [fx,fy]=polanch(Nload,a,b,mu,ro,G,v_x,v_y,v_z)
 		vy=v_y+v_z*a;
 	else
 		vy=v_y;
-    end
+	end
 	v=sqrt(v_x**2+vy**2);
-	//Constante tangencial de Kalker
-    cjj=sqrt((C_11*v_x/v)**2+(C_22*v_y/v)**2);
-	//Gradiente de deformacion
-	eta=0.25*G*%pi*a*b*cjj*v/(ro*Nload);
-	ft=-(2*ro*Nload/%pi)*((eta/(1+eta**2))+atan(eta));
-	fx=ft*v_x/v;
-	fy=ft*v_y/v;
+	if (v==0)
+		fx=0;
+		fy=0;
+	else
+		//Constante tangencial de Kalker
+		cjj=sqrt((C_11*v_x/v)**2+(C_22*v_y/v)**2);
+        //Gradiente de deformacion
+		eta=0.25*G*%pi*a*b*cjj*v/(ro*Nload);
+		ft=(2*ro*Nload/%pi)*((eta/(1+eta**2))+atan(eta));
+		if (v_x==0)
+			fx=0;
+		else
+			fx=ft*v_x/v;
+		end
+		if (v_y==0)	
+			fy=0;
+		else
+			fy=ft*v_y/v;
+		end
+	end
 
 endfunction

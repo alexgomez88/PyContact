@@ -63,9 +63,9 @@ function [fx,fy]=kalkerS(Nload,a,b,vmu,ro,G,v_x,v_y,v_z)
 	L2=8*a/(3*G*c22);
 	L3=pi*(a**2)/(4*G*sqrt(a*b)*c23);
 	%Inicio de las iteraciones verticales
-	fx=0;
-	fy=0;	
 	for j=1:100
+		fx=0;
+		fy=0;
 		%Determina el valor de la coordenada lateral del punto de estudio
         	Yo=DY*(50-j);
         	%Determina el valor de la coordenada del primer punto de estudio

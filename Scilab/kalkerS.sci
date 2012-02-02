@@ -58,7 +58,7 @@ function [fx,fy]=kalkerS(Nload,a,b,mu,ro,G,v_x,v_y,v_z)
     //Calcula inicialmente una serie de puntos X y Y de modo que se calcule el domo de saturacion
 	//de presiones tangenciales, para ello se hace con un numero standar de 10000 iteraciones.
 	DY=2*b/100;
-    X=zeros(100,100);
+    	X=zeros(100,100);
 	Y=zeros(100,100);
 	Pn=zeros(100,100);
 	Tmax=zeros(100,100);
@@ -70,43 +70,44 @@ function [fx,fy]=kalkerS(Nload,a,b,mu,ro,G,v_x,v_y,v_z)
 	L2=8*a/(3*G*C_22);
 	L3=%pi*(a**2)/(4*G*sqrt(a*b)*C_23);
 	//Inicio de las iteraciones verticales
+	fx=0;
+	fy=0;
 	for j=1:100
-		fx=0;
-		fy=0;
+		
 		//Determina el valor de la coordenada lateral del punto de estudio
-        Yo=DY*(50-j);
+        	Yo=DY*(50-j);
         //Determina el valor de la coordenada del primer punto de estudio
 		Xo=-a*real(sqrt(1-(Yo/b)**2));
 		//Determina la longitud del segmento longitudinal de estudio
-        DX=2*a*real(sqrt(1-(Yo/b)**2))/100;
-        //Inicia las iteraciones longitudinales
+        	DX=2*a*real(sqrt(1-(Yo/b)**2))/100;
+        	//Inicia las iteraciones longitudinales
 		for i=1:100
-            //Llenado de la matriz de coordenadas de Y
-            Y(j,i)=Yo;
-            //Llenado de la matriz de coordenadas de X
-            X(j,i)=Xo+DX*(i);
-            //Se determina la presion normal aplicada sobre el punto de estudio
-            Pn(j,i)=((3*Nload)/(2*%pi*a*b))*real(sqrt(1-(X(j,i)/a)**2-(Y(j,i)/b)**2));
-            //Presion maxima tangencial permitida en la superficie
-            Tmax(j,i)=ro*Pn(j,i);
-            //Distribucion de presion tangencial lineal
-            Tx(j,i)=(v_x/L1-Y(j,i)*v_z/L3)*(X(j,i)-Xo);
-            Ty(j,i)=(v_y/L2)*(X(j,i)-Xo)+(0.5*v_z/L3)*(X(j,i)**2-Xo**2);
-            if (abs(Tx(j,i))<=Tmax(j,i))
-                Tx(j,i)=Tx(j,i);
-            else
-                Tx(j,i)=Tmax(j,i)*abs(Tx(j,i))/Tx(j,i);
-            end
-            if (abs(Ty(j,i))<=Tmax(j,i))
-                Ty(j,i)=Ty(j,i);
-            else
-                Ty(j,i)=Tmax(j,i)*abs(Ty(j,i))/Ty(j,i);
-            end
-            //Integración de las componentes tangenciales en la dirección
-            //longitudinal y lateral
-            fx=fx+Tx(j,i)*DX*DY;
-            fy=fy+Ty(j,i)*DX*DY;
-        end
-    end
+            		//Llenado de la matriz de coordenadas de Y
+            		Y(j,i)=Yo;
+            		//Llenado de la matriz de coordenadas de X
+            		X(j,i)=Xo+DX*(i);
+            		//Se determina la presion normal aplicada sobre el punto de estudio
+            		Pn(j,i)=((3*Nload)/(2*%pi*a*b))*real(sqrt(1-(X(j,i)/a)**2-(Y(j,i)/b)**2));
+            		//Presion maxima tangencial permitida en la superficie
+            		Tmax(j,i)=ro*Pn(j,i);
+            		//Distribucion de presion tangencial lineal
+            		Tx(j,i)=(v_x/L1-Y(j,i)*v_z/L3)*(X(j,i)-Xo);
+            		Ty(j,i)=(v_y/L2)*(X(j,i)-Xo)+(0.5*v_z/L3)*(X(j,i)**2-Xo**2);
+            		if (abs(Tx(j,i))<=Tmax(j,i))
+                		Tx(j,i)=Tx(j,i);
+            		else
+                		Tx(j,i)=Tmax(j,i)*abs(Tx(j,i))/Tx(j,i);
+            		end
+            		if (abs(Ty(j,i))<=Tmax(j,i))
+                		Ty(j,i)=Ty(j,i);
+            		else
+                		Ty(j,i)=Tmax(j,i)*abs(Ty(j,i))/Ty(j,i);
+            		end
+            		//Integración de las componentes tangenciales en la dirección
+            		//longitudinal y lateral
+            		fx=fx+Tx(j,i)*DX*DY;
+            		fy=fy+Ty(j,i)*DX*DY;
+        	end
+	end
                 
 endfunction
