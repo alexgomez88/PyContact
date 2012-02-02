@@ -193,7 +193,7 @@ def kalkerS(Nload,a,b,mu,ro,G,v_x,v_y,v_z):
                		fy=fy+Ty[j,i]*DX*DY
 	return fx,fy
 	
-def shen(Nload,a,b,mu,ro,G,v_x,v_y,v_z):
+def kalkerL(Nload,a,b,mu,ro,G,v_x,v_y,v_z):
 	#Tabla de Constantes de Kalker
 	C_11_0_1=np.array([2.47,2.51,2.59,2.68,2.78,2.88,2.98,3.09,3.19,3.29])
 	C_11_0_2=np.array([3.40,3.51,3.65,3.82,4.06,4.37,4.84,5.57,6.96,10.7])
